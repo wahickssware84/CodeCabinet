@@ -1,0 +1,120 @@
+/* 1 */
+SELECT
+    p.Name AS [Product Name],
+    p.ProductID,
+    ps.Name AS [Product Subcategory Name]
+FROM Production.Product p
+LEFT OUTER JOIN Production.ProductSubcategory ps
+    ON p.ProductSubcategoryID = ps.ProductSubcategoryID;
+
+/* 2 */
+SELECT
+    p.Name AS ProductName,
+    p.ListPrice,
+    ps.Name AS ProductSubcategoryName,
+    pc.Name AS ProductCategoryName
+FROM Production.Product p
+LEFT JOIN Production.ProductSubcategory ps
+    ON p.ProductSubcategoryID = ps.ProductSubcategoryID
+LEFT JOIN Production.ProductCategory pc
+    ON ps.ProductCategoryID = pc.ProductCategoryID
+ORDER BY
+ProductCategoryName DESC,
+ProductSubcategoryName ASC;
+
+/* 3 */
+SELECT
+    sp.BusinessEntityID AS SalesPersonID,
+    p.FirstName,
+    p.LastName,
+    st.Name AS SalesTerritoryName,
+    SUM(soh.TotalDue) AS SalesAmount
+FROM Sales.SalesPerson sp
+INNER JOIN Person.Person p
+    ON sp.BusinessEntityID = p.BusinessEntityID
+LEFT JOIN Sales.SalesTerritory st
+    ON sp.TerritoryID = st.TerritoryID
+INNER JOIN Sales.SalesOrderHeader soh
+    ON sp.BusinessEntityID = soh.SalesPersonID
+GROUP BY
+sp.BusinessEntityID,
+p.FirstName,
+p.LastName,
+st.Name;
+
+/* 4 */
+SELECT 
+    COUNT(*) AS TotalRows
+FROM Person.Person;
+
+/* 5 */
+SELECT 
+    COUNT(*) AS NonNullMiddleNameCount
+FROM Person.Person
+WHERE MiddleName IS NOT NULL;
+
+/* 6 */
+SELECT 
+    AVG(StandardCost) AS AverageStandardCost
+FROM Production.Product
+WHERE StandardCost > 0;
+
+/* 7 */
+SELECT 
+    AVG(Freight) AS AverageFreight
+FROM Sales.SalesOrderHeader
+WHERE TerritoryID = 4;
+
+/* 8 */
+SELECT 
+    TOP 1
+    ListPrice AS Most_Expensive
+FROM Production.Product
+ORDER BY ListPrice DESC;
+
+/* 9 */
+SELECT
+    PersonType,
+    COUNT(*) AS Count
+FROM Person.Person
+GROUP BY PersonType;
+
+/* 10 */
+SELECT 
+    Color,
+    COUNT(*) AS Count
+FROM Production.Product
+WHERE Color IN ('Red', 'Black')
+GROUP BY Color;
+
+/* 11 */
+SELECT
+    TerritoryID,
+COUNT(*) AS NumberOfSales
+FROM Sales.SalesOrderHeader
+WHERE OrderDate BETWEEN '2005-07-01' AND '2006-12-31'
+GROUP BY TerritoryID
+ORDER BY NumberOfSales DESC;
+
+/* 12 */
+SELECT
+    st.TerritoryID,
+    st.Name,
+    COUNT(*) AS Count
+FROM Sales.SalesOrderHeader soh
+INNER JOIN Sales.SalesTerritory st
+    ON soh.TerritoryID = st.TerritoryID
+WHERE soh.OrderDate BETWEEN '2005-07-01' AND '2006-12-31'
+GROUP BY st.TerritoryID, st.Name
+ORDER BY Count DESC;
+
+/* 13 */
+SELECT
+    st.TerritoryID,
+    st.Name AS [Territory Name],
+    SUM(soh.TotalDue) AS Total
+FROM Sales.SalesOrderHeader soh
+INNER JOIN Sales.SalesTerritory st
+    ON soh.TerritoryID = st.TerritoryID
+GROUP BY st.TerritoryID, st.Name
+HAVING SUM(soh.TotalDue) > 10000000;
