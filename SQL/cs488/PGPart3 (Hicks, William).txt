@@ -1,0 +1,89 @@
+-----------------------------------------------------
+--1 Sample Employees (for PG_CARD)
+-----------------------------------------------------
+INSERT INTO EMPLOYEE (EMP_ID, FNAME, LNAME, DOB, ADDRESS, EMPLOYMENT_TYPE)
+VALUES
+(100, 'John', 'Doe', '1990-01-01', '123 Main St', 'Manager'),
+(101, 'Jane', 'Smith', '1992-05-10', '456 Oak Ave', 'Manager');
+
+-----------------------------------------------------
+--2 Sample Customers (for PG_CARD & ORDER)
+-----------------------------------------------------
+INSERT INTO CUSTOMER(CUS_ID, LNAME, FNAME, AREACODE, PHONE, ADDRESS, CITY, STATE, ZIP, BALANCE)
+VALUES
+(100, Hicks, William, 256, 2566892516, 1235 Firecracker Rd., Piedmont, AL, 36272, 100.00),
+(200, Wheeler, Ralph, 256, 2561234567, 132 Virgil Dr., Ohatchee, AL, 36271, 150.00);
+
+-----------------------------------------------------
+--3 Sample Orders (for PAYMENT)
+-----------------------------------------------------
+INSERT INTO ORDER(ORDER_ID, CUS_ID, EMPLOYEE_ID, STAGE_NUM, DATE, ORDER_TOTAL, RATING)
+VALUES
+(101, 100, 100, 2, 11-22-2025, 32.45, 4),
+(102, 200, 101, 3, 11-23-2025, 52.56, 5);
+
+-----------------------------------------------------
+--4 PG Cards
+-----------------------------------------------------
+INSERT INTO PG_CARD(PG_CARD_ID, CUS_ID, EMP_ID, PG_CARD_TYPE)
+VALUES
+(131, 100, 100, Gold),
+(132, 200, 101, Platinum);
+
+-----------------------------------------------------
+--5 Payment
+-----------------------------------------------------
+INSERT INTO PAYMENT_METHOD(PAYMENT_METHOD_ID, PAYMENT_METHOD_TYPE)
+VALUES
+(1, Cash),
+(2, Debit),
+(3, Credit);
+
+INSERT INTO PAYMENT(PAYMENT_METHOD_ID, ORDER_ID, AMOUNT)
+VALUES
+(1, 101, 32.45),
+(2, 102, 52.56);
+
+-----------------------------------------------------
+--6 Promotion
+-----------------------------------------------------
+INSERT INTO PROMOTION(PROMOTION_ID, PROMOTION_TYPE)
+VALUES
+(100, 25PercentDiscount),
+(200, 50PercentDiscount),
+(300, 75PercentDiscount);
+
+INSERT INTO ONGOING_PROMOTION(PROMOTION_ID, MENU_ITEM_ID)
+VALUES
+(100, 101),
+(200, 102),
+(300, 103);
+
+-----------------------------------------------------
+--7 Menu Categories
+-----------------------------------------------------
+INSERT INTO MENU_CAT (MENU_CAT_ID, NAME)
+VALUES
+(100, 'Pizza'),
+(101, 'Beverages');
+
+INSERT INTO MENU_SUB (MENU_SUB_ID, MENU_CAT_ID, NAME)
+VALUES
+(100, 100, 'Specialty Pizzas'),
+(101, 101, 'Soft Drinks');
+
+INSERT INTO MENU_ITEM (MENU_ITEM_ID, MENU_SUB_ID, NAME, SERVING_SIZE, PRICE)
+VALUES
+(100, 100, 'Margherita Pizza', '12 inch', 10.00),
+(101, 100, 'Pepperoni Pizza', '12 inch', 12.00),
+(102, 100, 'Veggie Delight Pizza', '12 inch', 11.50),
+(103, 100, 'Chicken Supreme Pizza', '12 inch', 13.50),
+(104, 101, 'Cola', '12-pack', 3.50),
+(105, 101, 'Orange Juice', '1L', 4.00);
+
+INSERT INTO PRICE_HISTORY(MENU_ITEM_ID, NAME, SERVING_SIZE, HIST_PRICE)
+VALUES
+(100, 'Margherita Pizza', '12 inch', 10.00),
+(103, 'Chicken Supreme Pizza', '12 inch' 13.50),
+(105, 'Orange Juice, '1L', 4.00);
+
